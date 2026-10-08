@@ -1,0 +1,146 @@
+name: CI
+
+# Roda a cada push e a cada pull request na branch principal. O objetivo é que
+# os números declarados no README sejam verificáveis por uma máquina neutra, e
+# não apenas afirmados.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Um push novo cancela a execução anterior da mesma referência.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# Sobre `npm install` em vez de `npm ci`: o package-lock.json é gerado no
+# Windows, e ali o npm não registra no nível de topo algumas dependências
+# opcionais que só existem no Linux. O `npm install` respeita as versões
+# travadas e resolve o que falta para esta plataforma.
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  verificacao:
+    name: Tipos, lint e build
+    runs-on: ubuntu-latest
+    env:
+      # O build importa o cliente do banco e a configuração de autenticação.
+      # Nenhuma conexão é aberta; os valores são descartáveis.
+      DATABASE_URL: postgres://alta_app:ci@localhost:5433/alta_clara
+      BETTER_AUTH_SECRET: segredo-de-integracao-continua-descartavel-com-mais-de-32-caracteres
+      BETTER_AUTH_URL: http://localhost:3100
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Verificação de tipos
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Build de produção
+        run: npm run build
+
+  testes:
+    name: Domínio, autorização e banco
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: ci-superusuario-descartavel
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Banco e ambiente do CI
+        run: bash scripts/ci-preparar.sh
+      # O globalSetup do Vitest cria o banco de testes e aplica as migrações.
+      - name: Vitest
+        run: npm test
+
+  navegador:
+    name: Ponta a ponta e DAST
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: ci-superusuario-descartavel
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      # O Chrome já vem instalado na imagem ubuntu-latest.
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Banco e ambiente do CI
+        run: bash scripts/ci-preparar.sh
+      - name: Servidor de desenvolvimento
+        run: |
+          npm run dev -- --port 3100 > dev.log 2>&1 &
+          npx --yes wait-on@8 --timeout 120000 http-get://localhost:3100/entrar
+      # O E2E recria os dados sintéticos e confere que o log do servidor não
+      # contém token, código nem senha.
+      - name: Ponta a ponta no Chrome
+        run: E2E_LOG_SERVIDOR=dev.log npm run test:e2e
+      - name: Build de produção para o DAST
+        run: npm run build
+      - name: DAST contra o build de produção
+        run: |
+          BETTER_AUTH_URL=http://localhost:3200 npx next start -p 3200 > prod.log 2>&1 &
+          npx --yes wait-on@8 --timeout 120000 http-get://localhost:3200/entrar
+          DAST_URL=http://localhost:3200 npm run test:dast
+      - name: Guardar evidências quando falhar
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: evidencias-navegador
+          path: |
+            docs/evidencias/
+            dev.log
+            prod.log
+          retention-days: 7
+          if-no-files-found: ignore
+
+  seguranca:
+    name: Dependências, SAST, segredos e contraste
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Vulnerabilidades altas ou críticas nas dependências de produção
+        run: npm run audit:deps
+      - name: SAST (eslint-plugin-security)
+        run: npm run check:sast
+      - name: Segredos no repositório (secretlint)
+        run: npm run check:segredos
+      - name: Contraste de cor (WCAG AA)
+        run: npm run check:contraste
