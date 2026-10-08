@@ -1,0 +1,52 @@
+name: Recriar demonstração
+
+# A demonstração pública usa contas compartilhadas. Toda madrugada os dados
+# fictícios voltam ao estado inicial: o que um visitante escreveu não fica
+# para o próximo.
+on:
+  schedule:
+    - cron: "0 6 * * *" # 03:00 em Brasília
+  workflow_dispatch:
+
+concurrency:
+  group: demo-reset
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  recriar:
+    name: Dados fictícios da demonstração
+    runs-on: ubuntu-latest
+    # Só roda no repositório original, onde os secrets existem.
+    if: github.repository == 'WeslleySoaress/alta-clara'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      # Os arquivos de ambiente existem só durante o job. O dono do esquema é
+      # necessário para apagar os dados; a aplicação web nunca recebe esta URL.
+      - name: Ambiente a partir dos secrets
+        env:
+          DEMO_DATABASE_URL: ${{ secrets.DEMO_DATABASE_URL }}
+          DEMO_DATABASE_URL_OWNER: ${{ secrets.DEMO_DATABASE_URL_OWNER }}
+          DEMO_BETTER_AUTH_SECRET: ${{ secrets.DEMO_BETTER_AUTH_SECRET }}
+          DEMO_SENHA: ${{ secrets.DEMO_SENHA }}
+        run: |
+          umask 077
+          {
+            echo "BETTER_AUTH_SECRET=$DEMO_BETTER_AUTH_SECRET"
+            echo "BETTER_AUTH_URL=https://alta-clara.vercel.app"
+            echo "DATABASE_URL=$DEMO_DATABASE_URL"
+            echo "ALTA_DEMO_SENHA=\"$DEMO_SENHA\""
+          } > .env.local
+          echo "DATABASE_URL_OWNER=$DEMO_DATABASE_URL_OWNER" > .env.operacao.local
+      - name: Recriar os dados
+        run: npm run db:seed -- --reset --demo
+      - name: Apagar os arquivos de ambiente
+        if: always()
+        run: rm -f .env.local .env.operacao.local .dev-credenciais.md

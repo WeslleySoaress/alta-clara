@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/WeslleySoaress/alta-clara/actions/workflows/ci.yml/badge.svg)](https://github.com/WeslleySoaress/alta-clara/actions/workflows/ci.yml)
 
+**Demonstração online: [alta-clara.vercel.app](https://alta-clara.vercel.app)** — entre com um clique como enfermagem, revisor, paciente, admin ou auditor.
+
 Orientação e acompanhamento da alta hospitalar, do hospital até a casa do paciente.
 
 A equipe monta o plano de alta num formulário, outra pessoa da equipe revisa e
@@ -123,12 +125,22 @@ sistema não sabe o que é normal para aquela pessoa.
 
 ## Demonstração online
 
+**[alta-clara.vercel.app](https://alta-clara.vercel.app)** — Vercel (São Paulo) com PostgreSQL no Neon.
+
 A demonstração pública roda em modo próprio (`ALTA_MODO_DEMONSTRACAO=1`): a tela de
 entrada tem **um botão por perfil** — enfermagem, revisor, paciente, admin e
 auditor —, os dados são fictícios e voltam ao estado inicial todos os dias, e nada
 que tire a conta compartilhada de outro visitante é permitido (trocar senha,
-ligar 2FA, encerrar sessões). O que mudar nesse modo está em
+ligar 2FA, encerrar sessões). O que muda nesse modo está em
 [`src/server/demonstracao.ts`](src/server/demonstracao.ts).
+
+- O app recebe só o usuário restrito `alta_app`; a URL do dono do esquema fica num
+  *secret* do GitHub, usada apenas pelo job que recria os dados toda madrugada
+  ([`.github/workflows/demo-reset.yml`](.github/workflows/demo-reset.yml)).
+- As mensagens (como o código de ativação de um paciente) aparecem na
+  [caixa simulada](https://alta-clara.vercel.app/dev/mensagens).
+- Os lembretes agendados não rodam na demonstração: exigem um processo contínuo,
+  que a hospedagem gratuita não oferece.
 
 ## Stack
 
