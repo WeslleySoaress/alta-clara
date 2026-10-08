@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Alta Clara — identidade visual
+   Índigo profundo + verde-água vivo, com coral, girassol e violeta como
+   acentos. Contraste de cada par de texto verificado por scripts/contraste.ts
+   (WCAG AA). Cores de alerta continuam reservadas a estados clínicos; o grupo
+   "previsto" usa azul informativo, nunca verde.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --bg: #f6f8fc;
+  --surface: #ffffff;
+  --ink: #0e1b3d;
+  --muted: #4a5677;
+  --line: #e1e6f2;
+  --primary: #08786f;
+  --primary-ink: #ffffff;
+  --primary-soft: #d7f5ef;
+  --info: #2849b8;
+  --info-soft: #e5ecff;
+  --warn: #7f4d00;
+  --warn-soft: #fff1cc;
+  --danger: #b42318;
+  --danger-soft: #ffe4e0;
+  --violet: #5b3fd1;
+  --violet-soft: #ece7ff;
+  --coral: #b4321f;
+  --coral-soft: #ffe8e2;
+  --focus: #5b3fd1;
+
+  /* Cores decorativas (formas, gradientes; nunca texto sobre fundo claro) */
+  --vivo-teal: #19d3c0;
+  --vivo-violet: #7c5cff;
+  --vivo-coral: #ff7a59;
+  --vivo-sun: #ffc93c;
+  --vivo-sky: #4cc3ff;
+  --indigo: #141e55;
+  --indigo-2: #1f2a7a;
+
+  --sombra: 0 1px 2px rgb(14 27 61 / 0.06), 0 8px 24px -8px rgb(14 27 61 / 0.12);
+  --sombra-forte: 0 2px 4px rgb(14 27 61 / 0.08), 0 24px 48px -16px rgb(20 30 85 / 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a1030;
+    --surface: #121a42;
+    --ink: #eef1ff;
+    --muted: #aeb8dd;
+    --line: #26315e;
+    --primary: #45e0cf;
+    --primary-ink: #04302c;
+    --primary-soft: #0f3a44;
+    --info: #9db4ff;
+    --info-soft: #18235a;
+    --warn: #ffc857;
+    --warn-soft: #33250a;
+    --danger: #ff8d80;
+    --danger-soft: #3d1520;
+    --violet: #b9a8ff;
+    --violet-soft: #241a5c;
+    --coral: #ff9c85;
+    --coral-soft: #3d1a1a;
+    --focus: #b9a8ff;
+    --indigo: #141e55;
+    --indigo-2: #1f2a7a;
+    --sombra: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -8px rgb(0 0 0 / 0.5);
+    --sombra-forte: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.6);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-ink: var(--primary-ink);
+  --color-primary-soft: var(--primary-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
+  --color-indigo: var(--indigo);
+  --color-vivo-teal: var(--vivo-teal);
+  --color-vivo-violet: var(--vivo-violet);
+  --color-vivo-coral: var(--vivo-coral);
+  --color-vivo-sun: var(--vivo-sun);
+  --color-vivo-sky: var(--vivo-sky);
+  --font-sans: var(--font-atkinson);
+  --font-display: var(--font-bricolage);
+  --shadow-suave: var(--sombra);
+  --shadow-forte: var(--sombra-forte);
+}
+
+html {
+  /* Base de 18px: o público principal lê melhor com letra maior. */
+  font-size: 112.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+html[data-fonte="grande"] {
+  font-size: 131.25%;
+}
+
+body {
+  /* Brilho suave e colorido nos cantos em todas as telas (fixo ao rolar). */
+  background:
+    radial-gradient(40% 35% at 0% 0%, rgb(25 211 192 / 0.14), transparent 70%),
+    radial-gradient(35% 30% at 100% 0%, rgb(124 92 255 / 0.12), transparent 70%),
+    radial-gradient(35% 30% at 100% 100%, rgb(255 201 60 / 0.1), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+.titulo {
+  font-family: var(--font-bricolage), var(--font-atkinson), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ── Superfícies vivas ─────────────────────────────────────────────────── */
+
+/* Painel índigo com manchas de luz coloridas (texto sempre branco/claro). */
+.painel-vivo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(60% 70% at 85% 10%, rgb(124 92 255 / 0.75), transparent 60%),
+    radial-gradient(55% 60% at 10% 95%, rgb(25 211 192 / 0.6), transparent 60%),
+    radial-gradient(40% 45% at 95% 95%, rgb(255 122 89 / 0.55), transparent 60%),
+    linear-gradient(140deg, var(--indigo) 0%, var(--indigo-2) 100%);
+}
+
+/* Fundo da página com brilho suave nos cantos. */
+.fundo-aurora {
+  background:
+    radial-gradient(40% 35% at 0% 0%, rgb(25 211 192 / 0.16), transparent 70%),
+    radial-gradient(35% 30% at 100% 5%, rgb(124 92 255 / 0.14), transparent 70%),
+    radial-gradient(35% 30% at 100% 100%, rgb(255 201 60 / 0.12), transparent 70%),
+    var(--bg);
+}
+
+/* Texto em gradiente (só para palavras grandes de destaque). */
+.texto-vivo {
+  background: linear-gradient(100deg, var(--vivo-teal), var(--vivo-violet) 55%, var(--vivo-coral));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-color-scheme: light) {
+  /* No fundo claro, versão mais escura do gradiente para manter a leitura. */
+  .texto-vivo {
+    background-image: linear-gradient(100deg, #08786f, #5b3fd1 55%, #b4321f);
+  }
+}
+
+.borda-viva {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(120deg, var(--vivo-teal), var(--vivo-violet), var(--vivo-coral)) border-box;
+}
+
+.vidro {
+  background: rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  backdrop-filter: blur(14px);
+}
+
+/* ── Movimento discreto ────────────────────────────────────────────────── */
+
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.flutuar {
+  animation: flutuar 6s ease-in-out infinite;
+}
+.flutuar-lento {
+  animation: flutuar 8s ease-in-out infinite;
+  animation-delay: -2s;
+}
+.surgir {
+  animation: surgir 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html {
+    font-size: 12pt;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .painel-vivo {
+    background: #fff;
+    color: #000;
+  }
+}
