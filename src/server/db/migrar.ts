@@ -10,7 +10,8 @@ const SOMENTE_INSERCAO = ["auditoria"];
 export async function migrarBanco(urlOwner: string) {
   const pool = new pg.Pool({ connectionString: urlOwner, max: 1 });
   try {
-    await migrate(drizzle(pool), { migrationsFolder: "./drizzle" });
+    // ALTA_MIGRACOES permite rodar de outra pasta (ex.: preparar um banco remoto).
+    await migrate(drizzle(pool), { migrationsFolder: process.env.ALTA_MIGRACOES ?? "./drizzle" });
 
     const c = await pool.connect();
     try {

@@ -54,3 +54,10 @@ dev.log
 prod.log
 # Vercel
 .vercel
+
+.vercel
+.env*
+# arquivos de agentes instalados por integracoes da Vercel
+.agents/
+.claude/
+skills-lock.json

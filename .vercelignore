@@ -1,0 +1,13 @@
+# Nada local de segredo ou de operação vai para a Vercel.
+.env*
+!.env.example
+.dev-credenciais.md
+.backups
+.next
+node_modules
+.agents
+.claude
+skills-lock.json
+public
+dev.log
+prod.log
