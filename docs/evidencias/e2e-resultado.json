@@ -1,0 +1,129 @@
+{
+  "executadoEm": "2026-10-07T23:55:06.956Z",
+  "resultados": [
+    {
+      "etapa": "acessibilidade automática (axe) em /entrar",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "login navegável por teclado (e-mail → senha → Entrar)",
+      "ok": true,
+      "detalhe": "a:Alta ClaraSeu cuidad | input: | button:Entrar com passkey | input:email | input:senha | button:Mostrar | button:Entrar | a:Esqueci minha senha | a:Ver a demonstração s | nextjs-portal: | nextjs-portal: | body:Demonstração — dados"
+    },
+    {
+      "etapa": "profissional sem MFA é levado a configurar TOTP antes da área da equipe",
+      "ok": true
+    },
+    {
+      "etapa": "enfermagem cria rascunho a partir de modelo, inclui medicamento e envia para revisão",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em /equipe",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "publicação recusada com prontuário de outro paciente",
+      "ok": true
+    },
+    {
+      "etapa": "revisor diferente do autor aprova e publica",
+      "ok": true
+    },
+    {
+      "etapa": "QR code contém só a URL de ativação com token no fragmento",
+      "ok": true,
+      "detalhe": "http://localhost:3100/ativar#t=<token>"
+    },
+    {
+      "etapa": "pré-visualização não mostra dados clínicos",
+      "ok": true
+    },
+    {
+      "etapa": "token removido da barra de endereço",
+      "ok": true,
+      "detalhe": "http://localhost:3100/ativar"
+    },
+    {
+      "etapa": "paciente ativa a conta com código no canal validado",
+      "ok": true
+    },
+    {
+      "etapa": "token do convite nunca foi enviado em URL de requisição",
+      "ok": true
+    },
+    {
+      "etapa": "log do servidor não contém token, código nem senha",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em plano do paciente",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "paciente correto vê o plano publicado",
+      "ok": true
+    },
+    {
+      "etapa": "registro relatado de dose salvo no servidor",
+      "ok": true
+    },
+    {
+      "etapa": "cadastro de passkey avisa o titular por mensagem",
+      "ok": true
+    },
+    {
+      "etapa": "login com passkey (autenticador WebAuthn virtual, verificação do usuário)",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em confirmação de entendimento",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "confirmação de entendimento com 'não sei' avisa a equipe",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em /paciente/cuidadores",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "cuidador aceita convite com a própria conta e vê o plano autorizado",
+      "ok": true
+    },
+    {
+      "etapa": "revogação pelo paciente remove o acesso do cuidador",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em /equipe/pendencias",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "pendência de entendimento aparece para a enfermagem do atendimento",
+      "ok": true
+    },
+    {
+      "etapa": "acessibilidade automática (axe) em /demo",
+      "ok": true,
+      "detalhe": "sem violações WCAG A/AA detectadas"
+    },
+    {
+      "etapa": "demo sem rolagem horizontal em 390 px",
+      "ok": true,
+      "detalhe": "scrollWidth=390"
+    },
+    {
+      "etapa": "rota do paciente sem sessão redireciona ao login",
+      "ok": true,
+      "detalhe": "status final 200"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "executadoEm": "2026-10-03T20:56:37.913Z",
+  "resultado": "restauração conferida",
+  "duracaoMs": 2793,
+  "bancoRestaurado": "alta_clara_restauracao",
+  "tabelas": [
+    {
+      "tabela": "account",
+      "esperado": 8,
+      "restaurado": 8,
+      "integridade": true
+    },
+    {
+      "tabela": "atendimento",
+      "esperado": 3,
+      "restaurado": 3,
+      "integridade": true
+    },
+    {
+      "tabela": "auditoria",
+      "esperado": 25,
+      "restaurado": 25,
+      "integridade": true
+    },
+    {
+      "tabela": "autorizacao_cuidador",
+      "esperado": 1,
+      "restaurado": 1,
+      "integridade": true
+    },
+    {
+      "tabela": "confirmacao_entendimento",
+      "esperado": 1,
+      "restaurado": 1,
+      "integridade": true
+    },
+    {
+      "tabela": "convite",
+      "esperado": 2,
+      "restaurado": 2,
+      "integridade": true
+    },
+    {
+      "tabela": "equipe_atendimento",
+      "esperado": 3,
+      "restaurado": 3,
+      "integridade": true
+    },
+    {
+      "tabela": "instituicao",
+      "esperado": 2,
+      "restaurado": 2,
+      "integridade": true
+    },
+    {
+      "tabela": "lembrete",
+      "esperado": 0,
+      "restaurado": 0,
+      "integridade": true
+    },
+    {
+      "tabela": "mensagem_dev",
+      "esperado": 4,
+      "restaurado": 4,
+      "integridade": true
+    },
+    {
+      "tabela": "modelo_protocolo",
+      "esperado": 4,
+      "restaurado": 4,
+      "integridade": true
+    },
+    {
+      "tabela": "paciente",
+      "esperado": 3,
+      "restaurado": 3,
+      "integridade": true
+    },
+    {
+      "tabela": "passkey",
+      "esperado": 1,
+      "restaurado": 1,
+      "integridade": true
+    },
+    {
+      "tabela": "pendencia",
+      "esperado": 2,
+      "restaurado": 2,
+      "integridade": true
+    },
+    {
+      "tabela": "plano",
+      "esperado": 1,
+      "restaurado": 1,
+      "integridade": true
+    },
+    {
+      "tabela": "preferencia_lembrete",
+      "esperado": 0,
+      "restaurado": 0,
+      "integridade": true
+    },
+    {
+      "tabela": "rate_limit",
+      "esperado": 8,
+      "restaurado": 8,
+      "integridade": true
+    },
+    {
+      "tabela": "registro_dose",
+      "esperado": 1,
+      "restaurado": 1,
+      "integridade": true
+    },
+    {
+      "tabela": "session",
+      "esperado": 3,
+      "restaurado": 3,
+      "integridade": true
+    },
+    {
+      "tabela": "two_factor",
+      "esperado": 2,
+      "restaurado": 2,
+      "integridade": true
+    },
+    {
+      "tabela": "user",
+      "esperado": 8,
+      "restaurado": 8,
+      "integridade": true
+    },
+    {
+      "tabela": "verification",
+      "esperado": 0,
+      "restaurado": 0,
+      "integridade": true
+    },
+    {
+      "tabela": "vinculo",
+      "esperado": 6,
+      "restaurado": 6,
+      "integridade": true
+    }
+  ],
+  "posRestauracao": [
+    "sessões apagadas",
+    "convites pendentes revogados"
+  ]
+}

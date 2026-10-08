@@ -1,0 +1,133 @@
+{
+  "executadoEm": "2026-10-07T23:52:23.009Z",
+  "escopo": "http://localhost:3200",
+  "resultados": [
+    {
+      "verificacao": "cabeçalhos de segurança em /",
+      "ok": true
+    },
+    {
+      "verificacao": "sem X-Powered-By em /",
+      "ok": true
+    },
+    {
+      "verificacao": "cabeçalhos de segurança em /entrar",
+      "ok": true
+    },
+    {
+      "verificacao": "sem X-Powered-By em /entrar",
+      "ok": true
+    },
+    {
+      "verificacao": "cabeçalhos de segurança em /demo",
+      "ok": true
+    },
+    {
+      "verificacao": "sem X-Powered-By em /demo",
+      "ok": true
+    },
+    {
+      "verificacao": "cabeçalhos de segurança em /ativar",
+      "ok": true
+    },
+    {
+      "verificacao": "sem X-Powered-By em /ativar",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: /paciente redireciona ao login",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: /equipe redireciona ao login",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: /equipe/pendencias redireciona ao login",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: /equipe/admin redireciona ao login",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: /conta/seguranca redireciona ao login",
+      "ok": true
+    },
+    {
+      "verificacao": "sem sessão: exportação FHIR responde 404",
+      "ok": true
+    },
+    {
+      "verificacao": "carga maliciosa na rota (' or 1=1--)",
+      "ok": true,
+      "detalhe": "status 404"
+    },
+    {
+      "verificacao": "carga maliciosa na rota (../../etc/passwd)",
+      "ok": true,
+      "detalhe": "status 404"
+    },
+    {
+      "verificacao": "carga maliciosa na rota (<script>alert(1)</script)",
+      "ok": true,
+      "detalhe": "status 404"
+    },
+    {
+      "verificacao": "carga maliciosa na rota (00000000-0000-0000-0000-)",
+      "ok": true,
+      "detalhe": "status 404"
+    },
+    {
+      "verificacao": "IDOR: cuidadora revogada não abre o plano (404)",
+      "ok": true
+    },
+    {
+      "verificacao": "IDOR: não profissional não exporta FHIR (404)",
+      "ok": true
+    },
+    {
+      "verificacao": "cookie de sessão HttpOnly, SameSite e Secure",
+      "ok": true,
+      "detalhe": "__Secure-alta.session_token=<valor>; Max-Age=604800; Path=/; HttpOnly; Secure; SameSite=Lax"
+    },
+    {
+      "verificacao": "área do paciente: página com no-store",
+      "ok": true,
+      "detalhe": "no-store, max-age=0"
+    },
+    {
+      "verificacao": "área do paciente: prefetch com no-store",
+      "ok": true,
+      "detalhe": "no-store, max-age=0"
+    },
+    {
+      "verificacao": "CSRF: ativação com Origin de outro site é recusada",
+      "ok": true
+    },
+    {
+      "verificacao": "CSRF: ativação exige JSON (formulário simples recusado)",
+      "ok": true
+    },
+    {
+      "verificacao": "CSRF: login com Origin de outro site é recusado",
+      "ok": true,
+      "detalhe": "status 403"
+    },
+    {
+      "verificacao": "redirecionamento para domínio externo é recusado",
+      "ok": true,
+      "detalhe": "status 403"
+    },
+    {
+      "verificacao": "JSON malformado não expõe stack trace",
+      "ok": true,
+      "detalhe": "status 400"
+    },
+    {
+      "verificacao": "força bruta: login limitado (429) em até 11 tentativas por minuto",
+      "ok": true,
+      "detalhe": "bloqueou na tentativa 6"
+    }
+  ]
+}
