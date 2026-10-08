@@ -1,0 +1,29 @@
+# Alternativa ao `npm run db` para quem tem Docker.
+# As senhas vêm do .env.operacao.local (gerado por `npm run setup`); nada fica neste arquivo.
+#
+#   docker compose --env-file .env.operacao.local up -d
+#   npm run db:migrate && npm run db:seed
+#
+# Observações:
+# - A autenticação (senhas, TOTP, passkeys) é feita pela biblioteca Better Auth
+#   dentro da aplicação; não há serviço de identidade separado nesta etapa.
+#   Um IdP institucional (ex.: Keycloak via OIDC) é próximo passo — ver docs/decisoes.md.
+# - Mensagens de desenvolvimento ficam no próprio banco (/dev/mensagens).
+# - O script init cria os papéis alta_owner e alta_app com as senhas do .env.operacao.local.
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: ${PG_SUPERUSER_PASSWORD:?rode npm run setup}
+      DB_OWNER_PASSWORD: ${DB_OWNER_PASSWORD:?}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:?}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "127.0.0.1:${PG_PORT:-5433}:5432"
+    volumes:
+      - alta_clara_pg:/var/lib/postgresql
+      - ./scripts/docker-init.sh:/docker-entrypoint-initdb.d/10-papeis.sh:ro
+
+volumes:
+  alta_clara_pg:
